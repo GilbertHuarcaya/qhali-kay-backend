@@ -36,7 +36,7 @@ async function loginUserHandler(req, res) {
     res.status(200).json({ token });
   } catch (err) {
     res.status(400).json(err);
-  
+  }
 }
 
 async function loginHospitalHandler(req, res) {
