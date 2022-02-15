@@ -10,7 +10,6 @@ const {
 
 const { verifyAccountEmail } = require('../../utils/email.js');
 const { verifyEmailToResetPassword } = require('../../utils/email.js');
-
 const { signToken } = require('../../auth/auth.service');
 
 const { log } = require('../../utils/logger');
@@ -165,7 +164,7 @@ async function deleteUserHandler(req, res) {
   }
 }
 
-async function getAllPersonalClensHandler(req, res) {
+async function getAllPersonalQhalikayHandler(req, res) {
   try {
     const users = await getUserByRolePersonal();
     if (!users) {
@@ -190,5 +189,5 @@ module.exports = {
   updateUserHandler,
   getUserByEmailHandler,
   sendEmailToUserByEmailHandler,
-  getAllPersonalClensHandler,
+  getAllPersonalQhalikayHandler,
 };

@@ -78,7 +78,7 @@ async function makePayment(user, payment) {
     phone: get(payment, 'phone'),
     cell_phone: get(payment, 'cellPhone'),
     bill: 'OR-1234',
-    description: 'Clens Payment',
+    description: 'Qhalikay Payment',
     value: get(payment, 'value'),
     tax: '1600',
     tax_base: '10000',

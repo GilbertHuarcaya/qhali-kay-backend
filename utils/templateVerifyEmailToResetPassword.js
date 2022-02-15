@@ -34,14 +34,14 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                           align="center"
                           style="font-size: 0px"
                         >
-                          <a target="_blank" href="https://clens.netlify.app/"
+                          <a target="_blank" href="https://qhalikay.netlify.app/"
                             ><img
                               class="adapt-img"
-                              src="https://demo.stripocdn.email/content/guids/99eb2aba-8131-44d7-8fa0-be4d7e3de407/images/logoclens_smq.jpg"
-                              alt="www.clens.com"
+                              src="https://demo.stripocdn.email/content/guids/99eb2aba-8131-44d7-8fa0-be4d7e3de407/images/logoqhalikay_smq.jpg"
+                              alt="www.qhalikay.com"
                               style="display: block"
                               width="100"
-                              title="www.clens.com"
+                              title="www.qhalikay.com"
                           /></a>
                         </td>
                       </tr>
@@ -97,7 +97,7 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                           bgcolor="transparent"
                           align="left"
                         >
-                          <p>Gracias por usar CLENS</p>
+                          <p>Gracias por usar QHALIKAY</p>
                         </td>
                       </tr>
                       <tr>

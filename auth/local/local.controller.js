@@ -1,7 +1,9 @@
 const { deleteUser } = require('../../api/user/user.service');
 const { getUserByEmail } = require('../../api/user/user.service');
+const { getHospitalByEmail } = require('../../api/hospital/hospital.service');
 const { getUserById } = require('../../api/user/user.service');
 const { updateUser } = require('../../api/user/user.service');
+const { updateHospital } = require('../../api/hospital/hospital.service');
 const { signToken } = require('../auth.service');
 const { validateToken } = require('../auth.service');
 const bcrypt = require('bcryptjs');
@@ -34,9 +36,69 @@ async function loginUserHandler(req, res) {
     res.status(200).json({ token });
   } catch (err) {
     res.status(400).json(err);
+  
+}
+
+async function loginHospitalHandler(req, res) {
+  const { email, password } = req.body;
+  try {
+    const hospital = await getHospitalByEmail(email);
+
+    if (!hospital) {
+      return res.status(400).json({
+        message: 'Hubo un error, revisa si el email o la contraseña son correctos',
+      });
+    }
+
+    if (!hospital.isVerified) {
+      return res.status(400).json({
+        message: 'Su email no está validado, revise su bandeja de mensajes o spam',
+      });
+    }
+
+    const isMatch = await hospital.comparePassword(password);
+    if (!isMatch) {
+      return res.status(400).json({
+        message: 'Hubo un error, revisa si el email o la contraseña son correctos',
+      });
+    }
+    const token = signToken(hospital.profile);
+
+    res.status(200).json({ token });
+  } catch (err) {
+    res.status(400).json(err);
   }
 }
 
+async function changePasswordHospitalHandler(req, res) {
+  const { email, password, newPassword } = req.body;
+  try {
+    const hospital = await getHospitalByEmail(email);
+
+    if (!hospital) {
+      return res.status(400).json({
+        message: 'Hospital not found',
+      });
+    }
+
+    const isMatch = await hospital.comparePassword(password);
+    if (!isMatch) {
+      return res.status(400).json({
+        message: 'Hubo un error revise nuevamente la contraseña',
+      });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt);
+
+    const updatedHospital = await updateHospital(hospital.id, { password: hash });
+
+    const token = signToken(updatedHospital.profile);
+
+    res.status(200).json({ token });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 async function changePasswordHandler(req, res) {
   const { email, password, newPassword } = req.body;
   try {
@@ -143,5 +205,7 @@ module.exports = {
   loginUserHandler,
   changePasswordHandler,
   validateEmaildHandler,
-  resetPasswordHandler
+  resetPasswordHandler,
+  loginHospitalHandler,
+  changePasswordHospitalHandler,
 };

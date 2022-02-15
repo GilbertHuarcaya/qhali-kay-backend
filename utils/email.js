@@ -19,10 +19,10 @@ async function verifyAccountEmail(user, token) {
   /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
   /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
-  const urlConfirm = `https://clens.netlify.app/validation-email/${token}`
+  const urlConfirm = `https://qhalikay.netlify.app/validation-email/${token}`
   // send mail with defined transport object
   await transporter.sendMail({
-    from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address
+    from: '"Qhalikay - El mejor servicio al mejor precio 👻" <no-reply@qhalikay.com>', // sender address
     to: user.email, // list of receivers
     subject: 'Correo de Verificacion ✔', // Subject line
     text: 'Texto de confirmacion en formato texto', // plain text body
@@ -51,10 +51,10 @@ async function verifyEmailToResetPassword(user, token) {
   /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
   /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
-  const urlConfirm = `https://clens.netlify.app/reset-password/${token}`
+  const urlConfirm = `https://qhalikay.netlify.app/reset-password/${token}`
   // send mail with defined transport object
   await transporter.sendMail({
-    from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address
+    from: '"Qhalikay - El mejor servicio al mejor precio 👻" <no-reply@qhalikay.com>', // sender address
     to: user.email, // list of receivers
     subject: 'Correo de Cambio de contraseña ✔', // Subject line
     text: 'Texto de confirmacion en formato texto', // plain text body
