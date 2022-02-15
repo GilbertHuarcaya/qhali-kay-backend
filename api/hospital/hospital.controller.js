@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const {
   createHospital,
   deleteHospital,
@@ -32,7 +31,6 @@ async function getHopitalByEmailHandler(req, res) {
     const token = signToken(hospital.profile);
     return res.status(200).json(token);
   } catch (error) {
-    log.error(error);
     return res.status(400).json({ error: error.message });
   }
 }
@@ -125,7 +123,6 @@ async function getHospitalMapHandler(req, res) {
         console.log(error);
       });
   } catch (error) {
-    log.error(error);
     return res.status(500).json({ error: error.message });
   }
 }

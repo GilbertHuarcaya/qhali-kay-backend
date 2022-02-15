@@ -6,7 +6,7 @@ const {
   getAllHospitalsHandler,
   getHospitalByIdHandler,
   updateHospitalHandler,
-  getHospitalByEmail,
+  getHopitalByEmailHandler,
   getHospitalMapHandler,
 } = require('./hospital.controller');
 
@@ -16,7 +16,7 @@ router.get('/', getAllHospitalsHandler);
 router.get('/search/:data', getHospitalMapHandler);
 router.post('/', createHospitalHandler);
 router.get('/:id', getHospitalByIdHandler);
-router.get('/email/:email', getHospitalByEmail);
+router.get('/email/:email', getHopitalByEmailHandler);
 router.delete('/:id', deleteHospitalHandler);
 router.patch('/:id', updateHospitalHandler);
 
