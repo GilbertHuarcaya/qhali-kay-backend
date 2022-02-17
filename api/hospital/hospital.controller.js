@@ -173,14 +173,27 @@ async function getHospitalMapHandler(req, res) {
 
     if (hospitals) {
       hospitals.map(async (h) => {
-        const existingHospital = getHospitalByEmail(h.email);
+        const existingHospital = await getHospitalByEmail(h.email);
         if (existingHospital) {
           return null
-        }
-        if (h.photo) {
-          const newHospital = {
+        } else {
+          if (h.photo) {
+            const newHospital = {
+              hospitalName: h.username,
+              photo: h.photo,
+              password: h.secret,
+              email: h.email,
+              custom_json: h.custom_json,
+              location: h.location,
+              rating: h.rating,
+              vicinity: h.vicinity,
+              types: h.types,
+              totalRatings: h.totalRatings,
+            }
+            return createHospital(newHospital)
+          }
+          return createHospital({
             hospitalName: h.username,
-            photo: h.photo,
             password: h.secret,
             email: h.email,
             custom_json: h.custom_json,
@@ -189,20 +202,8 @@ async function getHospitalMapHandler(req, res) {
             vicinity: h.vicinity,
             types: h.types,
             totalRatings: h.totalRatings,
-          }
-          await createHospital(newHospital)
+          })
         }
-        await createHospital({
-          hospitalName: h.username,
-          password: h.secret,
-          email: h.email,
-          custom_json: h.custom_json,
-          location: h.location,
-          rating: h.rating,
-          vicinity: h.vicinity,
-          types: h.types,
-          totalRatings: h.totalRatings,
-        })
       })
     }
 
