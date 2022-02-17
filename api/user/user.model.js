@@ -59,7 +59,6 @@ const UserSchema = new mongoose.Schema(
     },
     userName: {
       type: String,
-      uppercase: true,
       required: true,
     },
     firstName: {

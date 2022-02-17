@@ -10,13 +10,14 @@ const {
   getHospitalMapHandler,
 } = require('./hospital.controller');
 
+const { isAuthenticated } = require('../../auth/auth.service');
 const router = Router();
 
 router.get('/', getAllHospitalsHandler);
 router.get('/search/:data', getHospitalMapHandler);
 router.post('/', createHospitalHandler);
 router.get('/:id', getHospitalByIdHandler);
-router.get('/email/:email', getHopitalByEmailHandler);
+router.get('/email/:email', isAuthenticated(), getHopitalByEmailHandler);
 router.delete('/:id', deleteHospitalHandler);
 router.patch('/:id', updateHospitalHandler);
 

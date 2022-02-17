@@ -19,7 +19,6 @@ const HospitalSchema = new mongoose.Schema(
     },
     hospitalName: {
       type: String,
-      uppercase: true,
       required: true,
     },
     location: {
