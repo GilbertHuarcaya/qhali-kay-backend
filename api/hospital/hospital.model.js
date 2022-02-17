@@ -22,17 +22,36 @@ const HospitalSchema = new mongoose.Schema(
       uppercase: true,
       required: true,
     },
+    location: {
+      type: Object
+    },
+    rating: {
+      type: Number
+    },
+    vicinity: {
+      type: String,
+    },
+    types: {
+      type: Array,
+    },
+    totalRatings: {
+      type: Number
+    },
     photo: {
       public_id: String,
       format: String,
       created_at: Date,
       url: String,
+      google_url: String,
       secure_url: String,
     },
     isVerified: {
       type: Boolean,
       default: true,
     },
+    custom_json: {
+      type: Object,
+    }
   },
   {
     timestamps: true,
@@ -62,8 +81,8 @@ HospitalSchema.methods.comparePassword = async function (candidatePassword) {
 
 // Virtuals
 HospitalSchema.virtual('profile').get(function () {
-  const { email, id, photo, hospitalName } = this;
-  return { hospitalName, email, photo: { id: photo.public_id, url: photo.url }, id };
+  const { email, id, photo, hospitalName, location, rating, vicinity, totalRatings, types } = this;
+  return { hospitalName, email, photo: { id: photo.public_id, url: photo.url }, id, location, rating, vicinity, totalRatings, types };
 });
 
 module.exports = mongoose.model('Hospital', HospitalSchema);
