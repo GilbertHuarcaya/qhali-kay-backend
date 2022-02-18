@@ -3,6 +3,7 @@ const compose = require('composable-middleware');
 
 const config = require('../config');
 const { getUserByEmail } = require('../api/user/user.service');
+const { getHospitalByEmail } = require('../api/hospital/hospital.service');
 
 /**
  * Attaches the user object to the request if authenticated
@@ -41,6 +42,38 @@ function isAuthenticated() {
   });
 }
 
+function isHospitalAuthenticated() {
+  return compose().use(async (req, res, next) => {
+    try {
+      const authHeader = req.headers?.authorization;
+      if (authHeader) {
+        const [, token] = authHeader.split(' ');
+
+        // Validate token
+        const payload = await validateToken(token);
+
+        if (!payload) {
+          return res.status(401).end();
+        }
+
+        // Attach user to request
+        const user = await getHospitalByEmail(payload.email);
+
+        if (!user) {
+          return res.status(401).end();
+        }
+
+        req.user = user;
+        next();
+        return null;
+      } else {
+        return res.status(401).end();
+      }
+    } catch (error) {
+      return next(error);
+    }
+  });
+}
 /**
  * Checks if the user role meets the minimum requirements of the route
  */
@@ -93,4 +126,5 @@ module.exports = {
   isAuthenticated,
   hasRole,
   validateToken,
+  isHospitalAuthenticated,
 };

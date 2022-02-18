@@ -63,11 +63,9 @@ const UserSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      uppercase: true,
     },
     lastName: {
       type: String,
-      uppercase: true,
     },
     identificacion: {
       type: Number,
@@ -125,7 +123,7 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 // Virtuals
 UserSchema.virtual('profile').get(function () {
   const { firstName, lastName, email, role, identificacion, id, photo, billing, userName } = this;
-  return { billing, userName, fullname: `${firstName} ${lastName}`, role, email, identificacion, photo: { id: photo.public_id, url: photo.url }, id };
+  return { billing, userName, firstName, lastName, fullname: `${firstName} ${lastName}`, role, email, identificacion, photo: { id: photo.public_id, url: photo.url }, id };
 });
 
 module.exports = mongoose.model('User', UserSchema);
