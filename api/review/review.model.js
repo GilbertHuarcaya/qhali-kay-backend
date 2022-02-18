@@ -7,10 +7,6 @@ const ReviewSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    qhalikayId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
     userName: {
       type: String,
       ref: 'User',
@@ -21,7 +17,7 @@ const ReviewSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
-    comentario: {
+    message: {
       type: String,
       required: true,
       minLength: 10,
