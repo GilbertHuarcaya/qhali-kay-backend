@@ -65,8 +65,29 @@ async function verifyEmailToResetPassword(user, token) {
   // console.log("token:", token);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>;
 }
+async function contactUsEmail(data) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.SMTP_SERVER_USER,
+      pass: process.env.SMTP_SERVER_PASS,
+    },
+  });
 
+  await transporter.sendMail({
+    from: '"Qhalikay - El mejor servicio al mejor precio 👻" <no-reply@qhalikay.com>',
+    to: 'gilberthuarcaya@gmail.com',
+    subject: 'Correo de postulacion',
+    text: 'Texto de confirmacion en formato texto',
+    html: `Nombre: ${data.userName} <br>
+           Email: ${data.email} <br>
+           Message: ${data.message}`,
+  });
+}
 module.exports = {
   verifyAccountEmail,
-  verifyEmailToResetPassword
+  verifyEmailToResetPassword,
+  contactUsEmail,
 };

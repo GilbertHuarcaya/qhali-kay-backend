@@ -8,7 +8,7 @@ const {
   getUserByRolePersonal,
 } = require('./user.service');
 
-const { verifyAccountEmail } = require('../../utils/email.js');
+const { verifyAccountEmail, contactUsEmail } = require('../../utils/email.js');
 const { verifyEmailToResetPassword } = require('../../utils/email.js');
 const { signToken } = require('../../auth/auth.service');
 
@@ -162,6 +162,17 @@ async function getAllPersonalQhalikayHandler(req, res) {
   }
 }
 
+async function sendContactUsEmailHandler(req, res) {
+  const data = req.body
+  try {
+    await contactUsEmail(data);
+    return res.status(200).send(req.body);
+  } catch (error) {
+    log.error(error);
+    return res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createUserHandler,
   deleteUserHandler,
@@ -171,4 +182,5 @@ module.exports = {
   getUserByEmailHandler,
   sendEmailToUserByEmailHandler,
   getAllPersonalQhalikayHandler,
+  sendContactUsEmailHandler,
 };
