@@ -81,7 +81,7 @@ async function contactUsEmail(data) {
     to: 'gilberthuarcaya@gmail.com',
     subject: 'Correo de postulacion',
     text: 'Texto de confirmacion en formato texto',
-    html: `Nombre: ${data.userName} <br>
+    html: `Nombre: ${data.fullname} <br>
            Email: ${data.email} <br>
            Message: ${data.message}`,
   });
