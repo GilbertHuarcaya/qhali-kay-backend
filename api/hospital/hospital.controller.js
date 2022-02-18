@@ -67,12 +67,11 @@ async function updateHospitalHandler(req, res) {
     const hospital = await updateHospital(id, req.body);
 
     if (!hospital) {
-      return res
-        .status(404)
-        .json({ message: `Hospital not found with id: ${id}` });
+      return res.status(404).json({ message: `Hospital not found with id: ${id}` });
     }
+    const token = signToken(hospital.profile);
 
-    return res.status(200).json(hospital);
+    return res.status(200).json({ token });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

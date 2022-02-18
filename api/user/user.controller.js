@@ -14,14 +14,7 @@ const { signToken } = require('../../auth/auth.service');
 
 const { log } = require('../../utils/logger');
 
-const { connect } = require('getstream');
-const StreamChat = require('stream-chat').StreamChat;
-
 require('dotenv').config();
-
-const apiKey = process.env.STREAM_API_KEY;
-const apiSecret = process.env.STREAM_API_SECRET;
-const appId = process.env.STREAM_APP_ID;
 
 async function getAllUsersHandler(req, res) {
   try {
@@ -105,28 +98,19 @@ async function createUserHandler(req, res) {
       }
       const token = signToken(existingUser.profile);
 
-      const serverClient = connect(apiKey, apiSecret, appId);
-      const serverToken = serverClient.createUserToken(existingUser.id);
-      const client = StreamChat.getInstance(apiKey, apiSecret);
-      console.log(client)
-      return res.status(200).json({ token, serverToken });
+      return res.status(200).json({ token });
     }
 
     const user = await createUser(req.body);
 
     const token = signToken(user.profile)
 
-    const serverClient = connect(apiKey, apiSecret, appId);
-
-    const serverToken = serverClient.createUserToken(user.id);
-
     if (!user.isVerified) {
       await verifyAccountEmail(user, token);
     }
 
-    return res.status(201).json({ user: user.profile, serverToken: serverToken });
+    return res.status(201).json({ user: user.profile });
   } catch (error) {
-    log.error(error);
     return res.status(500).json({ error: error.keyValue });
   }
 }
@@ -143,7 +127,6 @@ async function updateUserHandler(req, res) {
 
     return res.status(200).json({ token });
   } catch (error) {
-    log.error(error);
     return res.status(500).json({ error: error.message });
   }
 }
@@ -159,7 +142,6 @@ async function deleteUserHandler(req, res) {
 
     return res.status(200).json(user);
   } catch (error) {
-    log.error(error);
     return res.status(500).json({ error: error.message });
   }
 }
@@ -176,7 +158,6 @@ async function getAllPersonalQhalikayHandler(req, res) {
     console.log(usersProfile)
     return res.status(200).json(usersProfile);
   } catch (error) {
-    log.error(error);
     return res.status(400).json({ error: error.message });
   }
 }
