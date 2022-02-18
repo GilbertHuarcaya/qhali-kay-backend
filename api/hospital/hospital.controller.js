@@ -129,7 +129,6 @@ async function getHospitalMapHandler(req, res) {
                 first_name: result.name,
                 last_name: result.name,
                 username: result.name,
-                secret: `${result.name.split(' ').join('')}${result.reference}`,
                 email: `${result.reference}@gmail.com`,
                 custom_json: {
                   ...result,
@@ -151,7 +150,6 @@ async function getHospitalMapHandler(req, res) {
                 first_name: result.name,
                 last_name: result.name,
                 username: result.name,
-                secret: `${result.name.split(' ').join('')}${result.reference}`,
                 email: `${result.reference}@gmail.com`,
                 custom_json: result,
                 location: result.geometry?.location,
@@ -180,7 +178,7 @@ async function getHospitalMapHandler(req, res) {
             const newHospital = {
               hospitalName: h.username,
               photo: h.photo,
-              password: h.secret,
+              password: `${h.custom_json.name.split(' ').join('')}${h.custom_json.reference}`,
               email: h.email,
               custom_json: h.custom_json,
               location: h.location,
@@ -193,7 +191,7 @@ async function getHospitalMapHandler(req, res) {
           }
           return createHospital({
             hospitalName: h.username,
-            password: h.secret,
+            password: `${h.custom_json.name.split(' ').join('')}${h.custom_json.reference}`,
             email: h.email,
             custom_json: h.custom_json,
             location: h.location,
