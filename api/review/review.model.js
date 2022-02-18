@@ -19,7 +19,6 @@ const ReviewSchema = new mongoose.Schema(
     },
     hospitalEmail: {
       type: String,
-      required: true,
     },
     message: {
       type: String,
