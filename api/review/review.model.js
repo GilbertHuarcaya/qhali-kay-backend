@@ -17,6 +17,10 @@ const ReviewSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
+    hospitalEmail: {
+      type: String,
+      required: true,
+    },
     message: {
       type: String,
       required: true,
