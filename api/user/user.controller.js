@@ -91,7 +91,8 @@ async function createUserHandler(req, res) {
 
       if (!existingUser.isVerified && isVerified) {
         const user = await updateUser(existingUser.id, { isVerified });
-        return res.status(201).json({ user: user.profile });
+        const token = signToken(user.profile);
+        return res.status(200).json({ token });
       }
 
       const isMatch = await existingUser.comparePassword(password);
