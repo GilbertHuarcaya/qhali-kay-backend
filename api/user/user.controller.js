@@ -8,7 +8,7 @@ const {
   getUserByRolePersonal,
 } = require('./user.service');
 
-const { verifyAccountEmail, contactUsEmail } = require('../../utils/email.js');
+const { contactUsEmail } = require('../../utils/email.js');
 const { verifyEmailToResetPassword } = require('../../utils/email.js');
 const { signToken } = require('../../auth/auth.service');
 
@@ -85,7 +85,7 @@ async function createUserHandler(req, res) {
     if (existingUser) {
       if (!existingUser.isVerified && !isVerified) {
         return res.status(400).json({
-          message: 'Su email no está validado, revise su bandeja de mensajes o spam',
+          message: 'email not verified, check your messages or spam',
         });
       }
 
@@ -112,10 +112,12 @@ async function createUserHandler(req, res) {
     const token = signToken(user.profile)
 
     if (!user.isVerified) {
-      await verifyAccountEmail(user, token);
+      return res.status(400).json({
+        message: 'email not verified, check your messages or spam',
+      });
     }
 
-    return res.status(201).json({ user: user.profile });
+    return res.status(201).json({ user: user.profile, token });
   } catch (error) {
     return res.status(500).json({ error: error.keyValue });
   }
