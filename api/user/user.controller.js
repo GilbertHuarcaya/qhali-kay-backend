@@ -78,15 +78,20 @@ async function sendEmailToUserByEmailHandler(req, res) {
 }
 
 async function createUserHandler(req, res) {
-  const { email, password } = req.body;
+  const { email, password, isVerified } = req.body;
   try {
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      if (!existingUser.isVerified) {
+      if (!existingUser.isVerified && !isVerified) {
         return res.status(400).json({
           message: 'Su email no está validado, revise su bandeja de mensajes o spam',
         });
+      }
+
+      if (!existingUser.isVerified && isVerified) {
+        const user = await updateUser(existingUser.id, { isVerified });
+        return res.status(201).json({ user: user.profile });
       }
 
       const isMatch = await existingUser.comparePassword(password);
