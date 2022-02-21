@@ -22,7 +22,7 @@ async function verifyAccountEmail(user, token) {
   const urlConfirm = `https://qhalikay.netlify.app/validation-email/${token}`
   // send mail with defined transport object
   await transporter.sendMail({
-    from: '"Qhalikay - El mejor servicio al mejor precio 👻" <no-reply@qhalikay.com>', // sender address
+    from: '"Qhalikay - Connecting for your health" <no-reply@qhalikay.com>', // sender address
     to: user.email, // list of receivers
     subject: 'Correo de Verificacion ✔', // Subject line
     text: 'Texto de confirmacion en formato texto', // plain text body
@@ -54,7 +54,7 @@ async function verifyEmailToResetPassword(user, token) {
   const urlConfirm = `https://qhalikay.netlify.app/reset-password/${token}`
   // send mail with defined transport object
   await transporter.sendMail({
-    from: '"Qhalikay - El mejor servicio al mejor precio 👻" <no-reply@qhalikay.com>', // sender address
+    from: '"Qhalikay - Connecting for your health" <no-reply@qhalikay.com>', // sender address
     to: user.email, // list of receivers
     subject: 'Correo de Cambio de contraseña ✔', // Subject line
     text: 'Texto de confirmacion en formato texto', // plain text body
@@ -77,10 +77,10 @@ async function contactUsEmail(data) {
   });
 
   await transporter.sendMail({
-    from: '"Qhalikay - El mejor servicio al mejor precio 👻" <no-reply@qhalikay.com>',
+    from: '"Qhalikay - Connecting for your health" <no-reply@qhalikay.com>',
     to: 'gilberthuarcaya@gmail.com',
-    subject: 'Correo de postulacion',
-    text: 'Texto de confirmacion en formato texto',
+    subject: `Hello i am ${data.fullname} here is my message`,
+    text: 'Contact Us email',
     html: `Nombre: ${data.fullname} <br>
            Email: ${data.email} <br>
            Message: ${data.message}`,
