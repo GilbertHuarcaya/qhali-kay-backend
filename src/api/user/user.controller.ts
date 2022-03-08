@@ -8,11 +8,11 @@ import {
   getUserByRolePersonal,
 } from './user.service';
 import { Request, Response } from 'express';
-const { contactUsEmail } = require('../../utils/email.js');
-const { verifyEmailToResetPassword } = require('../../utils/email.js');
-const { signToken } = require('../../auth/auth.service');
+import { contactUsEmail } from '../../utils/email';
+import { verifyEmailToResetPassword } from '../../utils/email';
+import { signToken } from '../../auth/auth.service';
 
-const { log } = require('../../utils/logger');
+import log from '../../utils/logger';
 
 require('dotenv').config();
 

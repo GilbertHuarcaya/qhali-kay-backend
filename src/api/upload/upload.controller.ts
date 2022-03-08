@@ -1,8 +1,9 @@
-const fs = require('fs');
+import fs from 'fs';
 const cloudinary = require('cloudinary').v2;
+import { Request, Response } from 'express';
 
-async function uploadSingleHandler(req, res) {
-  const { file } = req;
+async function uploadSingleHandler(req: Request, res: Response) {
+  const { file }: any = req;
 
   const size = file.size / 1024 / 1024;
 
@@ -22,8 +23,8 @@ async function uploadSingleHandler(req, res) {
   }
 }
 
-async function uploadArrayHandler(req, res) {
-  const { files } = req;
+async function uploadArrayHandler(req: Request, res: Response) {
+  const { files }: any = req;
 
   const results = [];
   for (const file of files) {

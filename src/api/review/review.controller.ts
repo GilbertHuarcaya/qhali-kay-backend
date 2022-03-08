@@ -1,21 +1,22 @@
-const {
+import {
   createReview,
   deleteReview,
   getAllReviews,
   getReviewById,
   updateReview,
-} = require('./review.service');
+} from './review.service';
+import { Request, Response } from 'express';
 
-async function getAllReviewsHandler(req, res) {
+export async function getAllReviewsHandler(req: Request, res: Response) {
   try {
     const reviews = await getAllReviews();
     return res.status(200).json(reviews);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function getReviewByIdHandler(req, res) {
+export async function getReviewByIdHandler(req: Request, res: Response) {
   const { id } = req.params;
   try {
     const review = await getReviewById(id);
@@ -27,21 +28,21 @@ async function getReviewByIdHandler(req, res) {
     }
 
     return res.status(200).json(review);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function createReviewHandler(req, res) {
+export async function createReviewHandler(req: Request, res: Response) {
   try {
     const review = await createReview(req.body);
     return res.status(201).json(review);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function updateReviewHandler(req, res) {
+export async function updateReviewHandler(req: Request, res: Response) {
   const { id } = req.params;
   try {
     const review = await updateReview(id, req.body);
@@ -53,12 +54,12 @@ async function updateReviewHandler(req, res) {
     }
 
     return res.status(200).json(review);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function deleteReviewHandler(req, res) {
+export async function deleteReviewHandler(req: Request, res: Response) {
   const { id } = req.params;
   try {
     const review = await deleteReview(id);
@@ -70,7 +71,7 @@ async function deleteReviewHandler(req, res) {
     }
 
     return res.status(200).json(review);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }

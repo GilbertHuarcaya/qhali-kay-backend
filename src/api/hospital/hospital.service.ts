@@ -1,10 +1,10 @@
-const Hospital = require('./hospital.model');
+import Hospital from './hospital.model';
 
 /**
  * Get all hospitals
  * @returns all hospitals
  */
-async function getAllHospitals() {
+export async function getAllHospitals() {
   const hospitals = await Hospital.find();
   return hospitals;
 }
@@ -14,7 +14,7 @@ async function getAllHospitals() {
  * @param {string} id Indentifier of the hospital to be filtered
  * @returns hospital
  */
-async function getHospitalById(id) {
+export async function getHospitalById(id: any) {
   const hospital = await Hospital.findById(id);
   return hospital;
 }
@@ -24,7 +24,7 @@ async function getHospitalById(id) {
  * @param {Object} hospital Hospital to create
  * @returns Hospital created
  */
-async function createHospital(hospital) {
+export async function createHospital(hospital: any) {
   const newHospital = new Hospital(hospital);
   const savedHospital = await newHospital.save();
   return savedHospital;
@@ -36,7 +36,7 @@ async function createHospital(hospital) {
  * @param {*} hospital Body of the hospital to be updated
  * @returns hospital updated
  */
-async function updateHospital(id, hospital) {
+export async function updateHospital(id: any, hospital: any) {
   const updatedHospital = await Hospital.findByIdAndUpdate(id, hospital);
   return updatedHospital;
 }
@@ -46,17 +46,17 @@ async function updateHospital(id, hospital) {
  * @param {String} id Identifier of the hospital to be deleted
  * @returns Hospital deleted
  */
-async function deleteHospital(id) {
+export async function deleteHospital(id: any) {
   const deletedHospital = await Hospital.findByIdAndDelete(id);
   return deletedHospital;
 }
 
-async function getHospitalByEmail(email) {
+export async function getHospitalByEmail(email: string) {
   const user = await Hospital.findOne({ email });
   return user;
 }
 
-module.exports = {
+export default {
   createHospital,
   deleteHospital,
   getAllHospitals,

@@ -1,10 +1,10 @@
-const Review = require('./review.model');
+import Review from './review.model';
 
 /**
  * Get all reviews
  * @returns all reviews
  */
-async function getAllReviews() {
+export async function getAllReviews() {
   const reviews = await Review.find();
   return reviews;
 }
@@ -14,7 +14,7 @@ async function getAllReviews() {
  * @param {string} id Indentifier of the review to be filtered
  * @returns review
  */
-async function getReviewById(id) {
+export async function getReviewById(id: any) {
   const review = await Review.findById(id);
   return review;
 }
@@ -24,7 +24,7 @@ async function getReviewById(id) {
  * @param {Object} review Review to create
  * @returns Review created
  */
-async function createReview(review) {
+export async function createReview(review: any) {
   const newReview = new Review(review);
   const savedReview = await newReview.save();
   return savedReview;
@@ -36,7 +36,7 @@ async function createReview(review) {
  * @param {*} review Body of the review to be updated
  * @returns review updated
  */
-async function updateReview(id, review) {
+export async function updateReview(id: any, review: any) {
   const updatedReview = await Review.findByIdAndUpdate(id, review);
   return updatedReview;
 }
@@ -46,7 +46,7 @@ async function updateReview(id, review) {
  * @param {String} id Identifier of the review to be deleted
  * @returns Review deleted
  */
-async function deleteReview(id) {
+export async function deleteReview(id: any) {
   const deletedReview = await Review.findByIdAndDelete(id);
   return deletedReview;
 }

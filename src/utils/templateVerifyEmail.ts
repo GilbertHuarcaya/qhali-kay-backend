@@ -1,4 +1,4 @@
-function templateVerifyEmailToResetPassword(user, urlConfirm) {
+function templateVerifyEmail(user: any, urlConfirm: any) {
   const template =
 `<td class="esd-stripe" align="center">
   <table
@@ -97,7 +97,7 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                           bgcolor="transparent"
                           align="left"
                         >
-                          <p>Gracias por usar QHALIKAY</p>
+                          <p>Gracias por registrarte en QHALIKAY</p>
                         </td>
                       </tr>
                       <tr>
@@ -259,7 +259,7 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                           bgcolor="transparent"
                           align="left"
                         >
-                          <p>Has solicitado un cambio de contraseña</p>
+                          <p>Despues de confirmar tu correo electronico</p>
                         </td>
                       </tr>
                       <tr>
@@ -268,18 +268,34 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                           bgcolor="transparent"
                           align="left"
                         >
-                          <p style="font-size: 16px">
-                            Si no fuiste tú porfavor ignora este mensaje
+                          <p style="font-size: 16px">Tendras acceso a:</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          class="esd-block-text es-p5b es-p5r es-p5l"
+                          bgcolor="transparent"
+                          align="left"
+                        >
+                          <p style="line-height: 200%; color: #666666">
+                            <span style="color: #2980d9">►</span>&nbsp;Todos
+                            nuestros servicios
                           </p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          class="esd-block-text es-p5t es-p5b"
-                          bgcolor="transparent"
-                          align="left"
-                        >
-                          <br />
+                          <p style="line-height: 200%; color: #666666">
+                            <span style="color: #2980d9">►</span>&nbsp;Agendar
+                            servicios en la fecha que desees
+                          </p>
+                          <p style="line-height: 200%; color: #666666">
+                            <span style="color: #2980d9">►</span>&nbsp;Ver tu
+                            historial de servicios
+                          </p>
+                          <p style="line-height: 200%; color: #666666">
+                            <span style="color: #2980d9">►</span>&nbsp;Contactar
+                            directamente con el equipo de soporte&nbsp;
+                          </p>
+                          <p style="line-height: 200%; color: #666666">
+                            <br />
+                          </p>
                         </td>
                       </tr>
                       <tr>
@@ -290,8 +306,8 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                         >
                           <p style="color: #77c6ca">
                             <strong
-                              >Cambia tu contraseña haciendo click en el
-                              siguiente enlace</strong
+                              >Confirma tu correo haciendo clic al siguiente
+                              enlace</strong
                             >
                           </p>
                         </td>
@@ -326,7 +342,8 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                           <span
                             class="es-button-border"
                             style="background: #77c6ca"
-                            ><a
+                          >
+                            <a
                               href="${urlConfirm}"
                               class="es-button es-button-1642564237440"
                               target="_blank"
@@ -335,9 +352,9 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
                                 background: #77c6ca;
                                 border-color: #77c6ca;
                               "
-                              >HAZ CLIC AQUI PARA CAMBIAR TU CONTRASEÑA</a
-                            ></span
-                          >
+                              >HAZ CLIC AQUI PARA CONFIRMAR</a
+                            >
+                          </span>
                         </td>
                       </tr>
                     </tbody>
@@ -397,6 +414,4 @@ function templateVerifyEmailToResetPassword(user, urlConfirm) {
   return template
 }
 
-module.exports = {
-  templateVerifyEmailToResetPassword
-}
+export default templateVerifyEmail

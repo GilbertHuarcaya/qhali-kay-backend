@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const HospitalSchema = new mongoose.Schema(
   {
@@ -67,21 +67,21 @@ HospitalSchema.pre('save', async function (next) {
     const hash = await bcrypt.hash(hospital.password, salt);
 
     hospital.password = hash;
-  } catch (error) {
+  } catch (error: any) {
     next(error);
   }
 });
 
-HospitalSchema.methods.comparePassword = async function (candidatePassword) {
+HospitalSchema.methods.comparePassword = async function (candidatePassword: any) {
   const hospital = this;
 
   return await bcrypt.compare(candidatePassword, hospital.password);
 };
 
 // Virtuals
-HospitalSchema.virtual('profile').get(function () {
+HospitalSchema.virtual('profile').get(function (this: any) {
   const { email, id, photo, hospitalName, location, rating, vicinity, totalRatings, types } = this;
   return { hospitalName, email, photo: { id: photo.public_id, url: photo.url }, id, location, rating, vicinity, totalRatings, types };
 });
-
-module.exports = mongoose.model('Hospital', HospitalSchema);
+const Hospital = mongoose.model('Hospital', HospitalSchema);
+export default Hospital

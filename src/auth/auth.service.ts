@@ -10,7 +10,7 @@ import { getHospitalByEmail } from '../api/hospital/hospital.service';
  * Otherwise returns 403
  */
 export function isAuthenticated() {
-  return compose().use(async (req: Request, res: Response, next: NextFunction) => {
+  return compose().use(async (req: any, res: Response, next: NextFunction) => {
     try {
       const authHeader = req.headers?.authorization;
       if (authHeader) {
@@ -43,7 +43,7 @@ export function isAuthenticated() {
 }
 
 export function isHospitalAuthenticated() {
-  return compose().use(async (req: Request, res: Response, next: NextFunction) => {
+  return compose().use(async (req: any, res: Response, next: NextFunction) => {
     try {
       const authHeader = req.headers?.authorization;
       if (authHeader) {
@@ -77,14 +77,14 @@ export function isHospitalAuthenticated() {
 /**
  * Checks if the user role meets the minimum requirements of the route
  */
-export function hasRole(rolesRequired = []) {
+export function hasRole(rolesRequired: any = []) {
   if (!rolesRequired.length) {
     throw new Error('Required role needs to be set');
   }
 
   return compose()
     .use(isAuthenticated())
-    .use((req: Request, res: Response, next: NextFunction) => {
+    .use((req: any, res: Response, next: NextFunction) => {
       const { role } = req.user;
       if (rolesRequired.includes(role)) {
         next();

@@ -1,25 +1,26 @@
-const {
+import {
   createHospital,
   deleteHospital,
   getAllHospitals,
   getHospitalById,
   updateHospital,
   getHospitalByEmail,
-} = require('./hospital.service');
-const { signToken } = require('../../auth/auth.service');
-const axios = require('axios');
+} from './hospital.service';
+import { Request, Response } from 'express';
+import { signToken } from '../../auth/auth.service';
+import axios from 'axios';
 const googleKey = process.env.GOOGLEMAPS_API_KEY;
 
-async function getAllHospitalsHandler(req, res) {
+export async function getAllHospitalsHandler(req: Request, res: Response) {
   try {
     const hospitals = await getAllHospitals();
     return res.status(200).json(hospitals);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function getHopitalByEmailHandler(req, res) {
+export async function getHopitalByEmailHandler(req: Request, res: Response) {
   const { email } = req.params;
   try {
     const hospital = await getHospitalByEmail(email);
@@ -30,12 +31,12 @@ async function getHopitalByEmailHandler(req, res) {
     }
     const token = signToken(hospital.profile);
     return res.status(200).json(token);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(400).json({ error: error.message });
   }
 }
 
-async function getHospitalByIdHandler(req, res) {
+export async function getHospitalByIdHandler(req: Request, res: Response) {
   const { id } = req.params;
   try {
     const hospital = await getHospitalById(id);
@@ -47,21 +48,21 @@ async function getHospitalByIdHandler(req, res) {
     }
 
     return res.status(200).json(hospital);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function createHospitalHandler(req, res) {
+export async function createHospitalHandler(req: Request, res: Response) {
   try {
     const hospital = await createHospital(req.body);
     return res.status(201).json(hospital);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function updateHospitalHandler(req, res) {
+export async function updateHospitalHandler(req: Request, res: Response) {
   const { id } = req.params;
   try {
     const hospital = await updateHospital(id, req.body);
@@ -72,12 +73,12 @@ async function updateHospitalHandler(req, res) {
     const token = signToken(hospital.profile);
 
     return res.status(200).json({ token });
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function deleteHospitalHandler(req, res) {
+export async function deleteHospitalHandler(req: Request, res: Response) {
   const { id } = req.params;
   try {
     const hospital = await deleteHospital(id);
@@ -89,29 +90,29 @@ async function deleteHospitalHandler(req, res) {
     }
 
     return res.status(200).json(hospital);
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function getHospitalMapHandler(req, res) {
+export async function getHospitalMapHandler(req: Request, res: Response) {
   const { data } = req.params
   try {
-    const config = {
+    const config: any = {
       method: 'get',
       url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${data}&radius=3500&type=hospital&key=${googleKey}`,
       headers: { }
     };
 
-    const hospitals = await axios(config)
-      .then(async function (response) {
-        const { results } = response.data;
+    const hospitals: any = await axios(config)
+      .then(async function (response: any) {
+        const { results }: any = response.data;
 
         const finalResponse = await Promise.all(
-          results.map(async (result) => {
-            const sendGetRequest = (result) => {
+          results.map(async (result: any) => {
+            const sendGetRequest = (result: any) => {
               try {
-                const hospitalPhoto = {
+                const hospitalPhoto: any = {
                   method: 'get',
                   url: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=${googleKey}`,
                   headers: { }
@@ -164,12 +165,12 @@ async function getHospitalMapHandler(req, res) {
         )
         return { nextPage: response.data.next_page_token, hospitals: finalResponse }
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         console.log(error);
       });
 
     if (hospitals.hospitals) {
-      hospitals.hospitals.map(async (h) => {
+      hospitals.hospitals.map(async (h: any) => {
         const existingHospital = await getHospitalByEmail(h.email);
         if (existingHospital) {
           return null
@@ -205,35 +206,35 @@ async function getHospitalMapHandler(req, res) {
     }
 
     return res.status(200).json(hospitals)
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }
 
-async function getNextPageHospitalHandler(req, res) {
+export async function getNextPageHospitalHandler(req: Request, res: Response) {
   const { token } = req.params
   try {
-    const config = {
+    const config: any = {
       method: 'get',
       url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${googleKey}&pagetoken=${token}`,
       headers: { }
     };
 
-    const hospitals = await axios(config)
-      .then(async function (response) {
-        const { results } = response.data;
+    const hospitals: any = await axios(config)
+      .then(async function (response: any) {
+        const { results }: any = response.data;
 
         const finalResponse = await Promise.all(
-          results.map(async (result) => {
-            const sendGetRequest = (result) => {
+          results.map(async (result: any) => {
+            const sendGetRequest = (result: any) => {
               try {
-                const hospitalPhoto = {
+                const hospitalPhoto: any = {
                   method: 'get',
                   url: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=${googleKey}`,
                   headers: { }
                 };
                 const photoPath = axios(hospitalPhoto)
-                  .then(function (response) { return response.request.path })
+                  .then(function (response: any) { return response.request.path })
                 return photoPath
               } catch (err) {
                 console.error(err);
@@ -280,12 +281,12 @@ async function getNextPageHospitalHandler(req, res) {
         )
         return { nextPage: response.data.next_page_token, hospitals: finalResponse }
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         console.log(error);
       });
 
     if (hospitals.hospitals) {
-      hospitals.hospitals.map(async (h) => {
+      hospitals.hospitals.map(async (h: any) => {
         const existingHospital = await getHospitalByEmail(h.email);
         if (existingHospital) {
           return null
@@ -321,7 +322,7 @@ async function getNextPageHospitalHandler(req, res) {
     }
 
     return res.status(200).json(hospitals)
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 }

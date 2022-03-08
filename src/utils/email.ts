@@ -1,8 +1,8 @@
-const nodemailer = require('nodemailer');
-const { templateVerifyEmail } = require('./templateVerifyEmail.js')
-const { templateVerifyEmailToResetPassword } = require('./templateVerifyEmailToResetPassword.js')
+import nodemailer from 'nodemailer';
+import templateVerifyEmail from './templateVerifyEmail'
+import templateVerifyEmailToResetPassword from './templateVerifyEmailToResetPassword'
 
-async function verifyAccountEmail(user, token) {
+export async function verifyAccountEmail(user: any, token: any) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
@@ -34,7 +34,7 @@ async function verifyAccountEmail(user, token) {
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>;
 }
 
-async function verifyEmailToResetPassword(user, token) {
+export async function verifyEmailToResetPassword(user: any, token: any) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
@@ -65,7 +65,7 @@ async function verifyEmailToResetPassword(user, token) {
   // console.log("token:", token);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>;
 }
-async function contactUsEmail(data) {
+export async function contactUsEmail(data: any) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -86,7 +86,7 @@ async function contactUsEmail(data) {
            Message: ${data.message}`,
   });
 }
-module.exports = {
+export default {
   verifyAccountEmail,
   verifyEmailToResetPassword,
   contactUsEmail,

@@ -1,6 +1,6 @@
-const { Router } = require('express');
+import { Router } from 'express';
 
-const {
+import {
   createHospitalHandler,
   deleteHospitalHandler,
   getAllHospitalsHandler,
@@ -9,9 +9,9 @@ const {
   getHopitalByEmailHandler,
   getHospitalMapHandler,
   getNextPageHospitalHandler,
-} = require('./hospital.controller');
+} from './hospital.controller';
 
-const { isHospitalAuthenticated } = require('../../auth/auth.service');
+import { isHospitalAuthenticated } from '../../auth/auth.service';
 const router = Router();
 
 router.get('/', getAllHospitalsHandler);

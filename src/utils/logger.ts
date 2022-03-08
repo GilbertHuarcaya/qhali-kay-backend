@@ -23,6 +23,4 @@ const log = pino(
   transport,
 );
 
-module.exports = {
-  log,
-};
+export default log
