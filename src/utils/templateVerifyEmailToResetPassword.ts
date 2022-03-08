@@ -1,4 +1,4 @@
-function templateVerifyEmailToResetPassword(user: any, urlConfirm: any) {
+function templateVerifyEmailToResetPassword (user: any, urlConfirm: any) {
   const template =
 `<td class="esd-stripe" align="center">
   <table
@@ -398,4 +398,3 @@ function templateVerifyEmailToResetPassword(user: any, urlConfirm: any) {
 }
 
 export default templateVerifyEmailToResetPassword
-

@@ -1,11 +1,11 @@
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const ReviewSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: true
     },
     userName: {
       type: String,
@@ -18,23 +18,23 @@ const ReviewSchema = new mongoose.Schema(
       required: true
     },
     hospitalEmail: {
-      type: String,
+      type: String
     },
     message: {
       type: String,
       required: true,
       minLength: 10,
-      trim: true,
+      trim: true
     },
     rating: {
       type: Number,
-      required: true,
+      required: true
     }
   },
   {
-    timestamps: true,
-  },
-);
+    timestamps: true
+  }
+)
 
-const Review = mongoose.model('Review', ReviewSchema);
+const Review = mongoose.model('Review', ReviewSchema)
 export default Review

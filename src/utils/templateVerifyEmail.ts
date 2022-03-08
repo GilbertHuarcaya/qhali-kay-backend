@@ -1,4 +1,4 @@
-function templateVerifyEmail(user: any, urlConfirm: any) {
+function templateVerifyEmail (user: any, urlConfirm: any) {
   const template =
 `<td class="esd-stripe" align="center">
   <table

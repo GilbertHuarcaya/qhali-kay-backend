@@ -1,5 +1,5 @@
-const pino = require('pino');
-const dayjs = require('dayjs');
+import pino from 'pino'
+import dayjs from 'dayjs'
 
 const transport = pino.transport({
   target: 'pino-pretty',
@@ -10,17 +10,17 @@ const transport = pino.transport({
     ignore: 'pid,hostname',
     messageKey: 'msg',
     timestampKey: 'time',
-    levelKey: 'level',
-  },
-});
+    levelKey: 'level'
+  }
+})
 
 // Logger
 const log = pino(
   {
     level: 'debug',
-    timestamp: () => `,"time":"${dayjs().format('YYYY-MM-DD HH:mm:ss')}"`,
+    timestamp: () => `,"time":"${dayjs().format('YYYY-MM-DD HH:mm:ss')}"`
   },
-  transport,
-);
+  transport
+)
 
 export default log

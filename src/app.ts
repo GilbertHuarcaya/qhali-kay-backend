@@ -1,26 +1,25 @@
-import express from 'express';
+import express from 'express'
 
-import expressConfig from './config/express';
+import expressConfig from './config/express'
+import connectDB from './config/database'
+import routes from './routes'
 
-import connectDB from './config/database';
-import routes from './routes';
+const app = express()
 
-const app = express();
+expressConfig(app)
 
-expressConfig(app);
-
-const PORT = process.env.PORT;
+const PORT = process.env.PORT
 
 // Start server
 app.listen(PORT, () => {
   // connect to database
-  connectDB();
+  connectDB()
 
   // Routes
-  routes(app);
+  routes(app)
   // cambio de prueba
 
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+  console.log(`Server running at http://localhost:${PORT}/`)
+})
 
-module.exports = app;
+export default app

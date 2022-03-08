@@ -1,4 +1,5 @@
-require('dotenv').config();
+import dotenv from 'dotenv'
+dotenv.config()
 
 const all = {
   env: process.env.NODE_ENV,
@@ -13,10 +14,10 @@ const all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: process.env.SECRET_KEY || 's3cr3t_k3y@!!',
+    session: process.env.SECRET_KEY || 's3cr3t_k3y@!!'
   },
 
-  userRoles: ['admin', 'usuario', 'personal'],
-};
+  userRoles: ['admin', 'usuario', 'personal']
+}
 
-export default all;
+export default all

@@ -1,8 +1,8 @@
-import nodemailer from 'nodemailer';
+import nodemailer from 'nodemailer'
 import templateVerifyEmail from './templateVerifyEmail'
 import templateVerifyEmailToResetPassword from './templateVerifyEmailToResetPassword'
 
-export async function verifyAccountEmail(user: any, token: any) {
+export async function verifyAccountEmail (user: any, token: any) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
@@ -12,9 +12,9 @@ export async function verifyAccountEmail(user: any, token: any) {
     secure: true,
     auth: {
       user: process.env.SMTP_SERVER_USER,
-      pass: process.env.SMTP_SERVER_PASS,
-    },
-  });
+      pass: process.env.SMTP_SERVER_PASS
+    }
+  })
 
   /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
   /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
@@ -26,15 +26,15 @@ export async function verifyAccountEmail(user: any, token: any) {
     to: user.email, // list of receivers
     subject: 'Correo de Verificacion ✔', // Subject line
     text: 'Texto de confirmacion en formato texto', // plain text body
-    html: templateVerifyEmail(user, urlConfirm), // html body
-  });
+    html: templateVerifyEmail(user, urlConfirm) // html body
+  })
 
   // console.log("Message sent: %s", info.messageId);
   // console.log("token:", token);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>;
 }
 
-export async function verifyEmailToResetPassword(user: any, token: any) {
+export async function verifyEmailToResetPassword (user: any, token: any) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
@@ -44,9 +44,9 @@ export async function verifyEmailToResetPassword(user: any, token: any) {
     secure: true,
     auth: {
       user: process.env.SMTP_SERVER_USER,
-      pass: process.env.SMTP_SERVER_PASS,
-    },
-  });
+      pass: process.env.SMTP_SERVER_PASS
+    }
+  })
 
   /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
   /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
@@ -58,23 +58,23 @@ export async function verifyEmailToResetPassword(user: any, token: any) {
     to: user.email, // list of receivers
     subject: 'Correo de Cambio de contraseña ✔', // Subject line
     text: 'Texto de confirmacion en formato texto', // plain text body
-    html: templateVerifyEmailToResetPassword(user, urlConfirm), // html body
-  });
+    html: templateVerifyEmailToResetPassword(user, urlConfirm) // html body
+  })
 
   // console.log("Message sent: %s", info.messageId);
   // console.log("token:", token);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>;
 }
-export async function contactUsEmail(data: any) {
+export async function contactUsEmail (data: any) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
       user: process.env.SMTP_SERVER_USER,
-      pass: process.env.SMTP_SERVER_PASS,
-    },
-  });
+      pass: process.env.SMTP_SERVER_PASS
+    }
+  })
 
   await transporter.sendMail({
     from: '"Qhalikay - Connecting for your health" <no-reply@qhalikay.com>',
@@ -82,12 +82,7 @@ export async function contactUsEmail(data: any) {
     subject: `Hello i am ${data.fullname} here is my message`,
     text: 'Contact Us email',
     html: `Nombre: ${data.fullname} <br>
-           Email: ${data.email} <br>
-           Message: ${data.message}`,
-  });
+          Email: ${data.email} <br>
+          Message: ${data.message}`
+  })
 }
-export default {
-  verifyAccountEmail,
-  verifyEmailToResetPassword,
-  contactUsEmail,
-};

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 const HospitalSchema = new mongoose.Schema(
   {
@@ -9,17 +9,17 @@ const HospitalSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       minlength: 5,
-      lowercase: true,
+      lowercase: true
     },
     password: {
       type: String,
       required: true,
       trim: true,
-      minlength: 5,
+      minlength: 5
     },
     hospitalName: {
       type: String,
-      required: true,
+      required: true
     },
     location: {
       type: Object
@@ -28,10 +28,10 @@ const HospitalSchema = new mongoose.Schema(
       type: Number
     },
     vicinity: {
-      type: String,
+      type: String
     },
     types: {
-      type: Array,
+      type: Array
     },
     totalRatings: {
       type: Number
@@ -42,46 +42,46 @@ const HospitalSchema = new mongoose.Schema(
       created_at: Date,
       url: String,
       google_url: String,
-      secure_url: String,
+      secure_url: String
     },
     isVerified: {
       type: Boolean,
-      default: true,
+      default: true
     },
     custom_json: {
-      type: Object,
+      type: Object
     }
   },
   {
-    timestamps: true,
-  },
-);
+    timestamps: true
+  }
+)
 HospitalSchema.pre('save', async function (next) {
-  const hospital = this;
+  const hospital = this
   try {
     if (!hospital.isModified('password')) {
-      return next();
+      return next()
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(hospital.password, salt);
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(hospital.password, salt)
 
-    hospital.password = hash;
+    hospital.password = hash
   } catch (error: any) {
-    next(error);
+    next(error)
   }
-});
+})
 
 HospitalSchema.methods.comparePassword = async function (candidatePassword: any) {
-  const hospital = this;
+  const hospital = this
 
-  return await bcrypt.compare(candidatePassword, hospital.password);
-};
+  return await bcrypt.compare(candidatePassword, hospital.password)
+}
 
 // Virtuals
 HospitalSchema.virtual('profile').get(function (this: any) {
-  const { email, id, photo, hospitalName, location, rating, vicinity, totalRatings, types } = this;
-  return { hospitalName, email, photo: { id: photo.public_id, url: photo.url }, id, location, rating, vicinity, totalRatings, types };
-});
-const Hospital = mongoose.model('Hospital', HospitalSchema);
+  const { email, id, photo, hospitalName, location, rating, vicinity, totalRatings, types } = this
+  return { hospitalName, email, photo: { id: photo.public_id, url: photo.url }, id, location, rating, vicinity, totalRatings, types }
+})
+const Hospital = mongoose.model('Hospital', HospitalSchema)
 export default Hospital

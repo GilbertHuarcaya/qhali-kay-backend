@@ -1,20 +1,20 @@
-const { Router } = require('express');
+import { Router } from 'express'
+import { /* isAuthenticated */ hasRole } from '../../auth/auth.service'
 
-const {
+import {
   createReviewHandler,
   deleteReviewHandler,
   getAllReviewsHandler,
   getReviewByIdHandler,
-  updateReviewHandler,
-} = require('./review.controller');
+  updateReviewHandler
+} from './review.controller'
 
-const router = Router();
-const { /* isAuthenticated */ hasRole } = require('../../auth/auth.service');
+const router = Router()
 
-router.get('/', getAllReviewsHandler);
-router.get('/:id', getReviewByIdHandler);
-router.post('/', hasRole(['admin', 'usuario', 'personal']), createReviewHandler);
-router.patch('/:id', hasRole(['admin', 'usuario', 'personal']), updateReviewHandler);
-router.delete('/:id', hasRole(['admin', 'usuario', 'personal']), deleteReviewHandler);
+router.get('/', getAllReviewsHandler)
+router.get('/:id', getReviewByIdHandler)
+router.post('/', hasRole(['admin', 'usuario', 'personal']), createReviewHandler)
+router.patch('/:id', hasRole(['admin', 'usuario', 'personal']), updateReviewHandler)
+router.delete('/:id', hasRole(['admin', 'usuario', 'personal']), deleteReviewHandler)
 
-export default router;
+export default router

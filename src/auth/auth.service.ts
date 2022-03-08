@@ -1,97 +1,97 @@
-import jsonwebtoken from 'jsonwebtoken';
-const compose = require('composable-middleware');
-import { Request, Response, NextFunction } from 'express';
-import config from '../config';
-import { getUserByEmail } from '../api/user/user.service';
-import { getHospitalByEmail } from '../api/hospital/hospital.service';
+import jsonwebtoken from 'jsonwebtoken'
+import { Response, NextFunction } from 'express'
+import config from '../config'
+import { getUserByEmail } from '../api/user/user.service'
+import { getHospitalByEmail } from '../api/hospital/hospital.service'
+const compose = require('composable-middleware')
 
 /**
  * Attaches the user object to the request if authenticated
  * Otherwise returns 403
  */
-export function isAuthenticated() {
+export function isAuthenticated () {
   return compose().use(async (req: any, res: Response, next: NextFunction) => {
     try {
-      const authHeader = req.headers?.authorization;
+      const authHeader = req.headers?.authorization
       if (authHeader) {
-        const [, token] = authHeader.split(' ');
+        const [, token] = authHeader.split(' ')
 
         // Validate token
-        const payload: any = await validateToken(token);
+        const payload: any = await validateToken(token)
 
         if (!payload) {
-          return res.status(401).end();
+          return res.status(401).end()
         }
 
         // Attach user to request
-        const user = await getUserByEmail(payload.email);
+        const user = await getUserByEmail(payload.email)
 
         if (!user) {
-          return res.status(401).end();
+          return res.status(401).end()
         }
 
-        req.user = user;
-        next();
-        return null;
+        req.user = user
+        next()
+        return null
       } else {
-        return res.status(401).end();
+        return res.status(401).end()
       }
     } catch (error) {
-      return next(error);
+      return next(error)
     }
-  });
+  })
 }
 
-export function isHospitalAuthenticated() {
+export function isHospitalAuthenticated () {
   return compose().use(async (req: any, res: Response, next: NextFunction) => {
     try {
-      const authHeader = req.headers?.authorization;
+      const authHeader = req.headers?.authorization
       if (authHeader) {
-        const [, token] = authHeader.split(' ');
+        const [, token] = authHeader.split(' ')
 
         // Validate token
-        const payload: any = await validateToken(token);
+        const payload: any = await validateToken(token)
 
         if (!payload) {
-          return res.status(401).end();
+          return res.status(401).end()
         }
 
         // Attach user to request
-        const user: any = await getHospitalByEmail(payload.email);
+        const user: any = await getHospitalByEmail(payload.email)
 
         if (!user) {
-          return res.status(401).end();
+          return res.status(401).end()
         }
 
-        req.user = user;
-        next();
-        return null;
+        req.user = user
+        next()
+        return null
       } else {
-        return res.status(401).end();
+        return res.status(401).end()
       }
     } catch (error) {
-      return next(error);
+      return next(error)
     }
-  });
+  })
 }
 /**
  * Checks if the user role meets the minimum requirements of the route
  */
-export function hasRole(rolesRequired: any = []) {
+export function hasRole (rolesRequired: any = []) {
   if (!rolesRequired.length) {
-    throw new Error('Required role needs to be set');
+    throw new Error('Required role needs to be set')
   }
 
   return compose()
     .use(isAuthenticated())
     .use((req: any, res: Response, next: NextFunction) => {
-      const { role } = req.user;
+      const { role } = req.user
       if (rolesRequired.includes(role)) {
-        next();
+        next()
       } else {
-        res.status(403).send('Forbidden');
+        res.status(403).send('Forbidden')
       }
-    });
+    })
 }
 
 /**
@@ -99,12 +99,12 @@ export function hasRole(rolesRequired: any = []) {
  * @param {String} token
  * @returns {Object} payload
  */
-export async function validateToken(token: any) {
+export async function validateToken (token: any) {
   try {
-    const payload = await jsonwebtoken.verify(token, config.secrets.session);
-    return payload;
+    const payload = await jsonwebtoken.verify(token, config.secrets.session)
+    return payload
   } catch (error) {
-    return null;
+    return null
   }
 }
 
@@ -114,10 +114,10 @@ export async function validateToken(token: any) {
  * @returns {String} token
  */
 
-export function signToken(payload: any) {
+export function signToken (payload: any) {
   const token = jsonwebtoken.sign(payload, config.secrets.session, {
-    expiresIn: config.expiresIn,
-  });
+    expiresIn: config.expiresIn
+  })
 
-  return token;
+  return token
 }

@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
+import mongoose, { ConnectOptions } from 'mongoose'
 
-const URI = process.env.DB_URI;
+async function connectDB () {
+  const URI = process.env.DB_URI as string
 
-async function connectDB() {
   try {
     await mongoose.connect(URI, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB Connected');
+      useUnifiedTopology: true
+    } as ConnectOptions)
+    console.log('MongoDB Connected')
   } catch (error) {
-    console.log(error);
-    process.exit(1);
+    console.log(error)
+    process.exit(1)
   }
 }
 
-export default connectDB;
+export default connectDB

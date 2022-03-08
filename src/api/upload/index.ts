@@ -1,15 +1,15 @@
-const { Router } = require('express');
-const multer = require('multer');
+import { Router } from 'express'
+import multer from 'multer'
 
-const {
+import {
   uploadSingleHandler,
-  uploadArrayHandler,
-} = require('./upload.controller');
+  uploadArrayHandler
+} from './upload.controller'
 
-const router = Router();
-const upload = multer({ dest: './temp' });
+const router = Router()
+const upload = multer({ dest: './temp' })
 
-router.post('/file', upload.single('file'), uploadSingleHandler);
-router.post('/files', upload.any(), uploadArrayHandler);
+router.post('/file', upload.single('file'), uploadSingleHandler)
+router.post('/files', upload.any(), uploadArrayHandler)
 
-export default router;
+export default router
